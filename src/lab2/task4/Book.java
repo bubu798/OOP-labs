@@ -11,8 +11,12 @@ public class Book {
         this.year = year;
     }
 
+    @Override
     public String toString() {
-        // TODO
-        return null;
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", year=" + year +
+                '}';
     }
 }
