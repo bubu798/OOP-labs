@@ -16,6 +16,12 @@ public class Teacher {
     }
 
     // TODO: copy constructor
+    public Teacher(Teacher teacher) {
+        this.firstName = teacher.firstName;
+        this.lastName = teacher.lastName;
+        this.subjects = teacher.subjects;
+    }
+
 
     @Override
     public String toString() {

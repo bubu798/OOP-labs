@@ -20,6 +20,11 @@ public class Student {
     }
 
     // TODO: copy constructor
+    public Student(Student student) {
+        this.firstName = student.firstName;
+        this.lastName = student.lastName;
+        this.subjects = student.subjects;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -47,6 +52,15 @@ public class Student {
 
     public double averageGrade() {
         // TODO
+        for (Map.Entry<String, Integer> entry: subjects.entrySet()) {
+            double currentStudentAvgSum = 0.0;
+            List<Integer> studentGrades = Collections.singletonList(subjects.get(entry.getKey()));
+            for(double currentGrade : studentGrades){
+                currentStudentAvgSum + = currentGrade;
+            }
+            double currentStudentAvg = currentStudentAvgSum / studentGrades.size();
+            return currentStudentAvg;
+        }
         return 0;
     }
 
@@ -57,7 +71,7 @@ public class Student {
 
     public int getGradeForSubject(String subject) {
         // TODO
-        return 0;
+        return subjects.get(subject);
     }
 
     @Override
