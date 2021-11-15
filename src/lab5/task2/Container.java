@@ -2,14 +2,15 @@ package lab5.task2;
 
 import lab5.task1.Task;
 
+import java.util.ArrayList;
+
 public interface Container {
+    ArrayList<Task> list = new ArrayList<Task>();
     /**
      * Removes a Task from the Container.
      *
-     * @return the removed Task, if the Container is not empty;
-     *         null, otherwise
      */
-    Task pop();
+    void pop();
 
     /**
      * Inserts a Task in the Container.

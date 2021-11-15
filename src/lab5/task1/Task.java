@@ -1,9 +1,9 @@
 package lab5.task1;
 
 public interface Task {
-
-    /**
-     * Executes the action characteristic of the task.
-     */
+//    /**
+//     * Executes the action characteristic of the task.
+//     * @return
+//     */
     void execute();
 }
