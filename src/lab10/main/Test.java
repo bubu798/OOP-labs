@@ -51,15 +51,33 @@ public class Test {
     }
 
     private static void testConnect(Client client) {
-        // TODO
+        testDraw(client);
+        client.executeAction("connect", "0", "1");
+        client.executeAction("connect", "4", "2");
+
+        client.showDiagram();
     }
 
     private static void testResize(Client client) {
-        // TODO
+        testDraw(client);
+        client.executeAction("resize", "2", "50");
+        client.executeAction("resize", "3", "150");
+        client.showDiagram();
     }
 
     private static void testAllCommands(Client client) {
-        // TODO
+        testTextAndColor(client);
+
+        client.executeAction("resize", "2", "50");
+        client.executeAction("resize", "3", "150");
+        client.showDiagram();
+
+        client.executeAction("connect", "0", "1");
+        client.executeAction("connect", "4", "2");
+
+        client.executeAction("change color", "5", "YELLOW");
+
+        client.showDiagram();
     }
 
     private static void testSimpleUndoRedo(Client client) {
@@ -80,6 +98,83 @@ public class Test {
     }
 
     private static void testComplexUndoRedo(Client client) {
-        // TODO
+        client.newDiagram();
+
+        client.redo();
+        client.executeAction("draw rectangle");
+        client.showDiagram();
+        client.undo();
+        client.showDiagram();
+        client.undo();
+        client.redo();
+        client.executeAction("draw rectangle");
+        client.executeAction("draw rectangle");
+        client.showDiagram();
+
+        client.executeAction("change color", "0", "YELLOW");
+        client.executeAction("change color", "1", "RED");
+        client.executeAction("change color", "2", "BLUE");
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.redo();
+        client.showDiagram();
+
+        client.executeAction("change text", "0", "newText0");
+        client.executeAction("change text", "1", "newText1");
+        client.executeAction("change text", "2", "newText2");
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.redo();
+        client.showDiagram();
+
+        client.executeAction("resize", "0", "200");
+        client.executeAction("resize", "0", "300");
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.redo();
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.showDiagram();
+
+        client.executeAction("connect", "0", "1");
+        client.executeAction("connect", "1", "2");
+        client.executeAction("connect", "0", "2");
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.redo();
+        client.showDiagram();
+
+        client.undo();
+        client.undo();
+        client.undo();
+        client.undo();
+        client.undo();
+        client.undo();
+        client.showDiagram();
+
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.redo();
+        client.showDiagram();
     }
 }

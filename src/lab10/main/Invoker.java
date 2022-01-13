@@ -2,6 +2,7 @@ package lab10.main;
 
 import lab10.commands.*;
 
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
@@ -10,13 +11,15 @@ import java.util.LinkedList;
  * It is independent of the subtypes of commands, it just receives a command, runs it and implements a redo/undo mechanism.
  */
 public class Invoker {
+    private Deque<DrawCommand> commandsList = new LinkedList<>();
+    private Deque<DrawCommand> undoCommandsList = new LinkedList<>();
 
     /**
      * Clear up all the used resources, start fresh :D
      */
     public void restart() {
-      // TODO
-
+        commandsList = new LinkedList<>();
+        undoCommandsList = new LinkedList<>();
     }
 
     /**
@@ -24,24 +27,37 @@ public class Invoker {
      * @param command
      */
     public void execute(DrawCommand command) {
-
+        System.out.println(command);
+        commandsList.push(command);
+        command.execute();
     }
 
     /**
      * Undo the latest command
      */
     public void undo() {
-        // TODO
-        // Hint: use data structures to keep track of commands
-        // Do not use the java.util.Stack, its implementation is based on vector which is inefficient and deprecated.
-        // Use a class that implements the Deque interface, e.g. LinkedList https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Deque.html
+        if (commandsList.isEmpty()) {
+            System.out.println("No command to undo");
+        } else {
+            DrawCommand toUndo = commandsList.pop();
+            undoCommandsList.push(toUndo);
+            System.out.println("Undo command: " + toUndo);
+            toUndo.undo();
+        }
     }
 
     /**
      * Redo command previously undone. Cannot perform a redo after an execute, only after at least one undo.
      */
     public void redo() {
-        // TODO
+        if (undoCommandsList.isEmpty()) {
+            System.out.println("No commands to redo");
+        } else {
+            DrawCommand command = undoCommandsList.pop();
+            System.out.println("Redo: " + command);
+            commandsList.push(command);
+            command.execute();
+        }
 
     }
 }

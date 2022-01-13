@@ -18,16 +18,17 @@ public class Client {
     }
 
     public void showDiagram() {
-        // TODO
+        diagramCanvas.show();
     }
 
     public void newDiagram() {
-        // TODO
+        diagramCanvas = new DiagramCanvas();
+        invoker.restart();
     }
 
     public void executeAction(String commandName, String ...args) {
         // TODO - uncomment:
-        /*DrawCommand command;
+        DrawCommand command;
         try {
             CommandType commandType = CommandType.fromString(commandName);
             command = getCommand(commandType, args);
@@ -42,25 +43,36 @@ public class Client {
                 System.out.println("\t- " + type.text);
             }
             return;
-        }*/
+        }
 
         // TODO - Execute the action
-
+        invoker.execute(command);
     }
 
     private DrawCommand getCommand(CommandType type, String ...args) throws IllegalArgumentException {
         // TODO factory method to create DrawCommand subclasses.
-        // If there is an exception when parsing the string arguments (NumberFormatException) catch it and
-        // throw an IllegalArgumentException
+        DrawCommand newDrawCommand = null;
 
-        return null;
+        try {
+            switch (type) {
+                case DRAW_RECTANGLE -> newDrawCommand = new DrawRectangle(diagramCanvas);
+                case CHANGE_COLOR -> newDrawCommand = new ChangeColor(diagramCanvas, args[0], args[1]);
+                case CHANGE_TEXT -> newDrawCommand = new ChangeText(diagramCanvas, args[0], args[1]);
+                case RESIZE -> newDrawCommand = new Resize(diagramCanvas, args[0], args[1]);
+                case CONNECT -> newDrawCommand = new ConnectComponents(diagramCanvas, args[0], args[1]);
+            }
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Wrong type of argument");
+        }
+
+        return newDrawCommand;
     }
 
     public void undo(){
-        // TODO
+        invoker.undo();
     }
 
     public void redo() {
-        // TODO
+        invoker.redo();
     }
 }
