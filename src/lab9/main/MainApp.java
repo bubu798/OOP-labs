@@ -1,6 +1,11 @@
 package lab9.main;
 
+import lab9.dataprocessing.StepCountStrategy;
+import lab9.dataprocessing.StepCountStrategyFactory;
+import lab9.storage.ConsoleLogger;
+import lab9.storage.DataAggregator;
 import lab9.storage.DataRepository;
+import lab9.storage.SensorData;
 
 import java.util.Scanner;
 
@@ -16,10 +21,15 @@ public class MainApp {
         DataRepository dataRepository = new DataRepository();
         // TODO: use the StepCountStrategyFactory to create a strategy
 
+        StepCountStrategyFactory factory = new StepCountStrategyFactory(strategyType);
+        StepCountStrategy strategy = factory.createStrategy(dataRepository);
+
         // TODO: add observers to the dataRepository
         // don't forget to provide the strategy to the DataAggregator observer
+        dataRepository.addObserver(new ConsoleLogger());
+        dataRepository.addObserver(new lab9.storage.ServerCommunicationController());
+        dataRepository.addObserver(new DataAggregator(strategy));
 
-        /* TODO: uncomment
         long baseTimestamp = System.currentTimeMillis();
 
         dataRepository.addData(new SensorData(10, baseTimestamp + 1));
@@ -43,6 +53,6 @@ public class MainApp {
 
         dataRepository.addData(new SensorData(500, baseTimestamp + 600));
         System.out.println();
-         */
+
     }
 }
